@@ -4,27 +4,28 @@ Servo myservo;
  int fan = 13; boolean toggle = false; 
  int reg= 12;
  int spd =0;
- String angle = "";
  int ang=0;
+ bool start = false;
  
  
  void setup() {
  pinMode(fan, OUTPUT); 
  Serial.begin(9600);
- myservo.attach(11);
+ myservo.attach(3);
+ myservo.write(90);
+ Serial.flush();
  }
  
  void loop() {
-  
  while (Serial.available()) {
   val = Serial.read();
  }
- if (val == 's')    { fanToggle();}
+ if (val == 's')    { fanToggle(); start = true;}
  if (val == 'i')    { changeSpeed(1);}
  if (val == 'd')    { changeSpeed(2);}
- else               { ang = int(val);
- changeAngle(ang*18);}
- delay(100); 
+ else{ ang = int(val);
+ changeAngle(ang*2);}
+ Serial.flush();
  }
 
 
@@ -56,5 +57,5 @@ Servo myservo;
 
 void changeAngle(int ang){
   myservo.write(ang);
-  delay(50);
+  delay(10);
   }

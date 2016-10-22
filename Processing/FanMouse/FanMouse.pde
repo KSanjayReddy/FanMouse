@@ -36,6 +36,8 @@ void draw() {
      myPort.write('s');
      print("toggle");
      mousepress=0;
+     delay(50);
+     myPort.write(45);
      
    }    
    else if(mousePressed==false && mousepress==0)
@@ -72,22 +74,23 @@ void mousePressed() {
 }
 
 void mouseDragged() {
+  if(mouseButton== LEFT){
   if(locked) {
     bx = mouseX-xOffset;
+    angle= map(bx,0,700,0,90); 
+  
+  if(lastAngle != int(angle)){
+    myPort.write(int(angle));
+  print(byte(angle));
+  print(" ");
   }
+  }
+  }
+  
 }
 
 void mouseReleased() {
   locked = false;
-
- // angle = bx/100;
- 
-  angle= map(bx,0,700,0,10); 
-  
-  if(lastAngle != int(angle)){
-    myPort.write(int(angle));
-  print(int(angle));
-  }
 }
 
 
